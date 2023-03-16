@@ -41,25 +41,32 @@ class MainActivity : ComponentActivity() {
                         .background(color = Color.Cyan)
                         .fillMaxHeight()
                         .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                        Text(text = "$ ${clickCount}", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                        Text(text = "$ $clickCount", fontWeight = FontWeight.Bold, fontSize = 20.sp)
 
                         Spacer(modifier = Modifier.height(60.dp))
 
-                        Box(
-                            modifier = Modifier
-                                .size(180.dp)
-                                .background(Color.White.copy(0.5f), CircleShape)
-                                .clickable {
-                                    clickCount+=100
-                                },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(text = "Tap", fontWeight = FontWeight.SemiBold, fontSize = 20.sp)
+                        CustomCircle(clickCount = clickCount) {
+                            newValue -> clickCount = newValue
                         }
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun CustomCircle(clickCount: Int = 0, updateClickCount: (Int) -> Unit) {
+    Box(
+        modifier = Modifier
+            .size(180.dp)
+            .background(Color.White.copy(0.5f), CircleShape)
+            .clickable {
+                updateClickCount(clickCount + 100)
+            },
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = "Tap", fontWeight = FontWeight.SemiBold, fontSize = 20.sp)
     }
 }
 
